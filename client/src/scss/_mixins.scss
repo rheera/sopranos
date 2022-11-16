@@ -1,0 +1,29 @@
+@mixin box-shadow($y: 7px) {
+  box-shadow: 0 $y 5px -2px rgba(204, 204, 204, 0.25);
+}
+
+@mixin box-shadow-alt() {
+  box-shadow: 0 2px 4px 0 rgba($color-gray-500, 0.2),
+    0 0 1px 1px rgba($color-gray-500, 0.05);
+}
+
+@mixin text-shadow() {
+  text-shadow: 1px 1px 10px rgba(black, 0.2);
+}
+
+@mixin spread-map($map: ()) {
+  @each $key, $value in $map {
+    #{$key}: $value;
+  }
+}
+
+@function theme-var($key, $fallback: null, $map: $theme-map-light) {
+  @if not map-has-key($map, $key) {
+    @error "key: '#{$key}', is not a key in map: #{$map}";
+  }
+  @if ($fallback) {
+    @return var($key, $fallback);
+  } @else {
+    @return var($key);
+  }
+}

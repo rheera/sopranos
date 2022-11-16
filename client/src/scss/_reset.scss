@@ -1,0 +1,12 @@
+:root {
+  scroll-behavior: auto !important;
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS */
+  word-break: normal;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  // font-family: $font-main;
+}

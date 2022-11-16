@@ -1,0 +1,95 @@
+// Define variables
+$--ch-theme-primary: --ch-theme-primary;
+$--ch-theme-secondary: --ch-theme-secondary;
+$--ch-theme-highlight: --ch-theme-highlight;
+$--ch-theme-text: --ch-theme-text;
+$--ch-theme-text-select: --ch-theme-text-select;
+$--ch-theme-text-heading: --ch-theme-text-heading;
+$--ch-theme-text-rgba: --ch-theme-text-rgba;
+$--ch-theme-text-opposite: --ch-theme-text-opposite;
+$--ch-theme-text-dark: --ch-theme-text-dark;
+$--ch-theme-text-light: --ch-theme-text-light;
+$--ch-theme-black: --ch-theme-black;
+$--ch-theme-on-primary: --ch-theme-on-primary;
+$--ch-theme-on-secondary: --ch-theme-on-secondary;
+$--ch-theme-background-primary: --ch-theme-background-primary;
+$--ch-theme-background-secondary: --ch-theme-backgtround-secondary;
+$--ch-theme-background-opposite: --ch-theme-backgtround-opposite;
+$--ch-theme-nav-bg: --ch-theme-nav-bg;
+$--ch-theme-border1: --ch-theme-border1;
+$--ch-theme-border2: --ch-theme-border2;
+$--ch-theme-grad1: --ch-theme-grad1;
+$--ch-theme-grad2: --ch-theme-grad2;
+
+// Default theme
+$theme-map-light: (
+  $--ch-theme-primary: #fdf0d5,
+  $--ch-theme-secondary: #f4f4f4,
+  $--ch-theme-highlight: #2d71ab,
+  $--ch-theme-text: #3b3939,
+  $--ch-theme-text-heading: #069475,
+  $--ch-theme-text-rgba: rgba(0, 48, 73, 1),
+  $--ch-theme-text-dark: #3b3939,
+  $--ch-theme-text-opposite: #f8f6f1,
+  $--ch-theme-text-light: #f8f6f1,
+  $--ch-theme-black: #414142,
+  $--ch-theme-on-primary: #2f3565,
+  $--ch-theme-on-secondary: #2f3565,
+  $--ch-theme-background-primary: #f1d55e,
+  $--ch-theme-background-secondary: #e2e7e5,
+  $--ch-theme-background-opposite: #052939,
+  $--ch-theme-nav-bg: rgba(255, 255, 255, 0.3),
+  $--ch-theme-border1: rgba(0, 48, 73, 0),
+  $--ch-theme-border2: rgba(0, 48, 73, 0.5),
+  $--ch-theme-grad1: #2d71ab,
+  $--ch-theme-grad2: #8292bb,
+  $--ch-theme-text-select: #f96b8a,
+);
+
+// Override the default light theme
+$theme-map-dark: (
+  $--ch-theme-primary: #0a2233,
+  $--ch-theme-secondary: #6f7074,
+  $--ch-theme-highlight: #c584e8,
+  $--ch-theme-text: #f8f6f1,
+  $--ch-theme-text-heading: #f1d55e,
+  $--ch-theme-text-rgba: rgba(221, 221, 221, 1),
+  $--ch-theme-text-dark: #3b3939,
+  $--ch-theme-text-opposite: #3b3939,
+  $--ch-theme-text-light: #f8f6f1,
+  $--ch-theme-black: #414142,
+  $--ch-theme-on-primary: #aeb6be,
+  $--ch-theme-on-secondary: #c7c7d9,
+  $--ch-theme-background-primary: #1e4443,
+  $--ch-theme-background-secondary: #314056,
+  $--ch-theme-background-opposite: #fcedd8,
+  $--ch-theme-nav-bg: rgba(0, 48, 73, 0.3),
+  $--ch-theme-border1: rgba(221, 221, 221, 0),
+  $--ch-theme-border2: rgba(221, 221, 221, 0.5),
+  $--ch-theme-grad1: #c9ddbf,
+  $--ch-theme-grad2: #dbf7fd,
+  $--ch-theme-text-select: #e64c83,
+);
+
+.topbar #nav .line.teal {
+  background: #115974;
+  top: 15px;
+  opacity: 0;
+}
+.topbar #nav .line.lightBlue {
+  background: #77cdd7;
+  top: 15px;
+}
+.topbar #nav .line.beige {
+  background: #dccdc0;
+  top: 20px;
+}
+.topbar #nav .line.gold {
+  background: #a38a53;
+  top: 25px;
+}
+.topbar #nav .line.red {
+  background: #b83f28;
+  top: 25px;
+  opacity: 0;
+}
