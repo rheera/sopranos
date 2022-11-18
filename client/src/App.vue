@@ -1,5 +1,27 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import { onMounted } from "vue";
+import { useQuoteStore } from "@/stores/quoteStore";
+
+const store = useQuoteStore();
+
+onMounted(() => {
+  store.$patch({
+    quote: {
+      id: 3,
+      quote:
+        "Someday soon you’re gonna have families of your own, and if you’re lucky, you’ll remember the little moments like this that were good",
+      author: "Tony Soprano",
+      season: 1,
+      episode: null,
+      episodeTitle: "I Dream of Jeannie Cusamano",
+      year: null,
+      category: "Family",
+      upvote: 6,
+      downvote: 4,
+    },
+  });
+});
 </script>
 
 <template>
