@@ -7,9 +7,29 @@ const store = useQuoteStore();
 let quote = store.quote;
 
 function randomize() {
-  let oldNum = quoteNum.value;
-  quoteNum.value = Math.floor(Math.random() * quoteArr.value.length);
-  quoteNum.value == oldNum ? randomize() : null;
+  let oldNum = quote.id;
+  let newNum = Math.floor(Math.random() * 20);
+  console.log(newNum);
+  newNum == oldNum ? randomize() : fetchQuote(newNum);
+}
+
+async function fetchQuote(quoteId: number) {
+  const response = await fetch(
+    "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id=" +
+      quoteId
+    //   "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ id: quoteId }),
+    //   }
+  );
+  let newQuote = await response.json();
+  console.log(newQuote);
+
+  // store.$patch({ quote: { newQuote } });
 }
 
 const countVotes = computed(() => {
@@ -25,13 +45,13 @@ const countVotes = computed(() => {
         <p class="author">- {{ quote.author }}</p>
       </div>
       <div class="vote-btns">
-        <span class="vote vote-up" @click="quote.upvote++">
+        <span class="vote vote-up" @click="store.vote('up')">
           <svg width="36" height="36">
             <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
           </svg>
         </span>
         <p class="votes">{{ countVotes }}</p>
-        <span class="vote vote-down" @click="quote.downvote++">
+        <span class="vote vote-down" @click="store.vote('down')">
           <svg width="36" height="36">
             <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
           </svg>
