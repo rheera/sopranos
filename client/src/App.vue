@@ -2,25 +2,48 @@
 import { RouterLink, RouterView } from "vue-router";
 import { onMounted } from "vue";
 import { useQuoteStore } from "@/stores/quoteStore";
+import { useQuotesStore } from "@/stores/quotesStore";
 
-const store = useQuoteStore();
+const store = useQuotesStore();
+async function fetchAllQuotes() {
+  const response = await fetch(
+    "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id= "
 
-onMounted(() => {
+    //   "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ id: quoteId }),
+    //   }
+  );
+  let fetchedQuotes = await response.json();
+  console.log(fetchedQuotes);
+
   store.$patch({
-    quote: {
-      id: 3,
-      quote:
-        "Someday soon you’re gonna have families of your own, and if you’re lucky, you’ll remember the little moments like this that were good",
-      author: "Tony Soprano",
-      season: 1,
-      episode: null,
-      episodeTitle: "I Dream of Jeannie Cusamano",
-      year: null,
-      category: "Family",
-      upvote: 6,
-      downvote: 4,
-    },
+    quotes: fetchedQuotes,
+    activeId: Math.floor(Math.random() * fetchedQuotes.length),
   });
+}
+onMounted(() => {
+  fetchAllQuotes();
+  // store.$patch({ activeId: Math.floor(Math.random() * 20) });
+  // store.$patch({
+  //   quote: {
+  //     id: 3,
+  //     quote:
+  //       "Someday soon you’re gonna have families of your own, and if you’re lucky, you’ll remember the little moments like this that were good",
+  //     author: "Tony Soprano",
+  //     season: 1,
+  //     episode: null,
+  //     episodeTitle: "I Dream of Jeannie Cusamano",
+  //     year: null,
+  //     category: "Family",
+  //     upvote: 6,
+  //     downvote: 4,
+  //   },
+  // });
 });
 </script>
 

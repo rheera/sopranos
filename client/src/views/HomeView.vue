@@ -1,39 +1,43 @@
 <script setup lang="ts">
 import { quotes } from "@/assets/data/quotes.js";
 import { ref, computed } from "vue";
-import { useQuoteStore } from "@/stores/quoteStore";
+import { useQuotesStore } from "@/stores/quotesStore";
 
-const store = useQuoteStore();
-let quote = store.quote;
+const store = useQuotesStore();
 
 function randomize() {
-  let oldNum = quote.id;
+  let oldNum = store.activeId;
   let newNum = Math.floor(Math.random() * 20);
   console.log(newNum);
-  newNum == oldNum ? randomize() : fetchQuote(newNum);
+  newNum == oldNum ? randomize() : store.$patch({ activeId: newNum });
 }
+// TODO: figure out how to get just one quote instead of getAll from Lambda, something to do with Lambda proxy integration is enabled?
+// async function fetchQuote(quoteId: number) {
+//   const response = await fetch(
+//     "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id= " +
+//       quoteId
+//       "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ id: quoteId }),
+//       }
+//   );
+//   let newQuote = await response.json();
+//   console.log(newQuote);
 
-async function fetchQuote(quoteId: number) {
-  const response = await fetch(
-    "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id=" +
-      quoteId
-    //   "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ id: quoteId }),
-    //   }
-  );
-  let newQuote = await response.json();
-  console.log(newQuote);
-
-  // store.$patch({ quote: { newQuote } });
-}
-
+//   store.$patch({ quote: { newQuote } });
+// }
+// const quote = computed(() => {
+//   store.$subscribe;
+//   return store.quotes[store.activeId];
+// });
 const countVotes = computed(() => {
-  return quote.upvote >= quote.downvote ? quote.upvote - quote.downvote : 0;
+  return store.activeQuote.upvote >= store.activeQuote.downvote
+    ? store.activeQuote.upvote - store.activeQuote.downvote
+    : 0;
 });
 </script>
 
@@ -41,8 +45,8 @@ const countVotes = computed(() => {
   <main>
     <div class="app-wrapper container">
       <div class="quote-cnt">
-        <h3 class="quote">{{ quote.quote }}</h3>
-        <p class="author">- {{ quote.author }}</p>
+        <h3 class="quote">{{ store.activeQuote.quote }}</h3>
+        <p class="author">- {{ store.activeQuote.author }}</p>
       </div>
       <div class="vote-btns">
         <span class="vote vote-up" @click="store.vote('up')">
