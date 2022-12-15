@@ -89,6 +89,7 @@ export const useQuotesStore = defineStore("quotes", {
     return {
       quotes: [] as quote[],
       activeId: 3 as number,
+      loaded: false as boolean,
     };
   },
   getters: {

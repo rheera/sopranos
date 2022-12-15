@@ -7,7 +7,7 @@ import { useQuotesStore } from "@/stores/quotesStore";
 const store = useQuotesStore();
 async function fetchAllQuotes() {
   const response = await fetch(
-    "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id= "
+    "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes"
 
     //   "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
     //   {
@@ -19,11 +19,11 @@ async function fetchAllQuotes() {
     //   }
   );
   let fetchedQuotes = await response.json();
-  console.log(fetchedQuotes);
 
   store.$patch({
     quotes: fetchedQuotes,
     activeId: Math.floor(Math.random() * fetchedQuotes.length),
+    loaded: true,
   });
 }
 onMounted(() => {

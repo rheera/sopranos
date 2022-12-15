@@ -11,33 +11,64 @@ function randomize() {
   console.log(newNum);
   newNum == oldNum ? randomize() : store.$patch({ activeId: newNum });
 }
+async function upvote(id: number) {
+  await fetch("https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+      upvoteAmt: parseInt(store.activeQuote.upvote) + 1,
+      downvoteAmt: parseInt(store.activeQuote.downvote),
+    }),
+  });
+  store.quotes[store.activeId].upvote++;
+}
+async function downvote(id: number) {
+  await fetch("https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+      upvoteAmt: parseInt(store.activeQuote.upvote),
+      downvoteAmt: parseInt(store.activeQuote.downvote) + 1,
+    }),
+  });
+}
 // TODO: figure out how to get just one quote instead of getAll from Lambda, something to do with Lambda proxy integration is enabled?
-// async function fetchQuote(quoteId: number) {
-//   const response = await fetch(
-//     "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id= " +
-//       quoteId
-//       "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
-//       {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ id: quoteId }),
-//       }
-//   );
-//   let newQuote = await response.json();
-//   console.log(newQuote);
+/* async function fetchQuote(quoteId: number) {
+  const response = await fetch(
+    "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quotes?id= " +
+      quoteId
+      "https://hsk49u89s7.execute-api.us-east-1.amazonaws.com/quote",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: quoteId }),
+      }
+  );
+  let newQuote = await response.json();
+  console.log(newQuote);
 
-//   store.$patch({ quote: { newQuote } });
-// }
-// const quote = computed(() => {
-//   store.$subscribe;
-//   return store.quotes[store.activeId];
-// });
+  store.$patch({ quote: { newQuote } });
+}
+const quote = computed(() => {
+  store.$subscribe;
+  return store.quotes[store.activeId];
+}); */
 const countVotes = computed(() => {
-  return store.activeQuote.upvote >= store.activeQuote.downvote
-    ? store.activeQuote.upvote - store.activeQuote.downvote
-    : 0;
+  if (store.loaded) {
+    return store.activeQuote.upvote >= store.activeQuote.downvote
+      ? store.activeQuote.upvote - store.activeQuote.downvote
+      : 0;
+  } else {
+    return 0;
+  }
 });
 </script>
 
@@ -45,17 +76,21 @@ const countVotes = computed(() => {
   <main>
     <div class="app-wrapper container">
       <div class="quote-cnt">
-        <h3 class="quote">{{ store.activeQuote.quote }}</h3>
-        <p class="author">- {{ store.activeQuote.author }}</p>
+        <h3 class="quote">
+          {{ store.loaded ? store.activeQuote.quote : "Loading" }}
+        </h3>
+        <p class="author">
+          - {{ store.loaded ? store.activeQuote.author : "Loading" }}
+        </p>
       </div>
       <div class="vote-btns">
-        <span class="vote vote-up" @click="store.vote('up')">
+        <span class="vote vote-up" @click="upvote(store.activeQuote.id)">
           <svg width="36" height="36">
             <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
           </svg>
         </span>
         <p class="votes">{{ countVotes }}</p>
-        <span class="vote vote-down" @click="store.vote('down')">
+        <span class="vote vote-down" @click="downvote(store.activeQuote.id)">
           <svg width="36" height="36">
             <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
           </svg>
