@@ -37,6 +37,7 @@ async function downvote(id: number) {
       downvoteAmt: parseInt(store.activeQuote.downvote) + 1,
     }),
   });
+  store.quotes[store.activeId].downvote++;
 }
 // TODO: figure out how to get just one quote instead of getAll from Lambda, something to do with Lambda proxy integration is enabled?
 /* async function fetchQuote(quoteId: number) {
