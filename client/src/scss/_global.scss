@@ -10,4 +10,7 @@ input[type="reset"] {
   outline: inherit;
 }
 
-@import "../../node_modules/bootstrap/scss/bootstrap";
+// @import "../../node_modules/bootstrap/scss/bootstrap";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

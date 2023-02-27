@@ -2,6 +2,8 @@
 import { quotes } from "@/assets/data/quotes.js";
 import { ref, computed } from "vue";
 import { useQuotesStore } from "@/stores/quotesStore";
+import BaseIcon from "@/components/BaseIcon.vue";
+import IconGun from "@/components/Icons/IconGun.vue";
 
 const store = useQuotesStore();
 
@@ -75,30 +77,53 @@ const countVotes = computed(() => {
 
 <template>
   <main>
-    <div class="app-wrapper container">
-      <div class="quote-cnt">
-        <h3 class="quote">
-          {{ store.loaded ? store.activeQuote.quote : "Loading" }}
-        </h3>
-        <p class="author">
-          - {{ store.loaded ? store.activeQuote.author : "Loading" }}
-        </p>
+    <section class="app-wrapper container mx-auto">
+      <div class="card w-3/4 bg-base-300 text-base-content">
+        <div class="card-body items-center text-center">
+          <div class="quote-cnt">
+            <h3 class="quote text-5xl">
+              {{ store.loaded ? store.activeQuote.quote : "Loading" }}
+            </h3>
+            <p class="author">
+              - {{ store.loaded ? store.activeQuote.author : "Loading" }}
+            </p>
+          </div>
+          <div class="vote-btns card-actions justify-end">
+            <span class="vote vote-up" @click="upvote(store.activeQuote.id)">
+              <BaseIcon
+                icon-name="upvoteGun"
+                :width="11"
+                :height="28"
+                hover-color="rose-100"
+                ><IconGun
+              /></BaseIcon>
+              <!-- <svg width="36" height="36">
+                <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
+              </svg> -->
+            </span>
+            <p class="votes">{{ countVotes }}</p>
+            <span
+              class="vote vote-down"
+              @click="downvote(store.activeQuote.id)"
+            >
+              <!-- <svg width="36" height="36">
+                <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
+              </svg> -->
+              <BaseIcon
+                icon-name="downvoteGun"
+                :width="11"
+                :height="28"
+                hover-color="cyan-100"
+                ><IconGun
+              /></BaseIcon>
+            </span>
+          </div>
+          <button class="btn btn-primary" @click="randomize()">
+            Random Quote
+          </button>
+        </div>
       </div>
-      <div class="vote-btns">
-        <span class="vote vote-up" @click="upvote(store.activeQuote.id)">
-          <svg width="36" height="36">
-            <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
-          </svg>
-        </span>
-        <p class="votes">{{ countVotes }}</p>
-        <span class="vote vote-down" @click="downvote(store.activeQuote.id)">
-          <svg width="36" height="36">
-            <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
-          </svg>
-        </span>
-      </div>
-      <button class="btn btn-primary" @click="randomize()">Random Quote</button>
-    </div>
+    </section>
   </main>
 </template>
 
@@ -111,6 +136,9 @@ const countVotes = computed(() => {
   // max-width: 900px;
   // margin: 0 auto;
   .quote-cnt {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
   }
   .vote-btns {
     display: flex;
