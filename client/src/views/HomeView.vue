@@ -81,7 +81,7 @@ const countVotes = computed(() => {
       <div class="card w-3/4 bg-base-300 text-base-content">
         <div class="card-body items-center text-center">
           <div class="quote-cnt">
-            <h3 class="quote text-5xl">
+            <h3 class="quote text-xl md:text-5xl">
               {{ store.loaded ? store.activeQuote.quote : "Loading" }}
             </h3>
             <p class="author">
